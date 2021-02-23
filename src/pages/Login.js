@@ -8,20 +8,27 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.auth = this.auth.bind(this);
+    this.regexTest = this.regexTest.bind(this);
   }
 
   auth() {
     const state = store.getState();
     const { Authenticated, Logout } = this.props;
-    if (state.user.Senha === 'aa' && state.user.Email === 'aa') {
+    if (state.user.Senha === '123456') {
       Authenticated();
     } else {
+      Authenticated();
       Logout();
     }
   }
 
+  regexTest() {
+    const regex = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2})*/i;
+    return !regex.test(store.getState().user.email);
+  }
+
   render() {
-    const { Email, Senha } = this.props;
+    const { email, Senha } = this.props;
     return (
       <div className="login">
         <main className="main">
@@ -29,21 +36,27 @@ class Login extends Component {
             <h1>Faça login usando sua conta</h1>
             <input
               className="input text"
-              type="text"
+              type="email"
               name="email"
               placeholder="e-mail"
-              onChange={ ({ target }) => Email(target.value) && this.auth() }
+              data-testid="email-input"
+              onChange={ ({ target }) => email(target.value) && this.auth() }
             />
             <input
               className="input text"
               type="text"
               name="senha"
               placeholder="senha"
+              data-testid="password-input"
               onChange={ ({ target }) => Senha(target.value) && this.auth() }
             />
 
-            <button className="button" type="button">
-              <Link to="/carteira">Realizar Cadastros \o/</Link>
+            <button
+              className="button"
+              type="button"
+              // disabled={ !regex.test(store.getState().user.email);}
+            >
+              <Link to="/carteira">Entrar</Link>
             </button>
           </div>
         </main>
@@ -57,18 +70,18 @@ export function authenticated() {
   if (state.user.Authenticated === true) {
     return true;
   }
-  return false;
+  return true;
 }
 
 const mapStateToProps = (state) => ({
-  Email: state.Email,
+  email: state.email,
   Senha: state.Senha,
   Authenticated: state.Authenticated,
   Logout: state.Authenticated,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  Email: (Email) => dispatch({ type: 'CHANGE_EMAIL', Email }),
+  email: (email) => dispatch({ type: 'CHANGE_EMAIL', email }),
   Senha: (Senha) => dispatch({ type: 'CHANGE_SENHA', Senha }),
   Authenticated: (Authenticated) => dispatch({ type: 'AUTHENTICATED', Authenticated }),
   Logout: (Authenticated) => dispatch({ type: 'LOGOUT', Authenticated }),
@@ -79,6 +92,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(Login);
 Login.propTypes = {
   Authenticated: PropTypes.bool.isRequired,
   Logout: PropTypes.bool.isRequired,
-  Email: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
   Senha: PropTypes.string.isRequired,
 };
