@@ -8,23 +8,31 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.auth = this.auth.bind(this);
-    this.regexTest = this.regexTest.bind(this);
+    this.Re = this.Re.bind(this);
   }
 
   auth() {
     const state = store.getState();
     const { Authenticated, Logout } = this.props;
-    if (state.user.Senha === '123456') {
+    console.log('aut');
+    if (state.user.Senha === '123456' && state.user.email === 'alguem@email.com') {
       Authenticated();
+      this.Re();
     } else {
-      Authenticated();
       Logout();
+      this.Re();
     }
   }
 
-  regexTest() {
-    const regex = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2})*/i;
-    return !regex.test(store.getState().user.email);
+  Re() {
+    const state = store.getState();
+    const { Disabled, Abled } = this.props;
+    const reg = /^[A-Za-z0-9.-]+@[A-Za-z0-9]+(\.[A-Za-z]{3}|\.[A-Za-z]{3}\.[A-Za-z]{2})$/;
+    if (reg.test(state.user.email) === true) {
+      Disabled();
+    } else {
+      Abled();
+    }
   }
 
   render() {
@@ -50,14 +58,15 @@ class Login extends Component {
               data-testid="password-input"
               onChange={ ({ target }) => Senha(target.value) && this.auth() }
             />
-
-            <button
-              className="button"
-              type="button"
-              // disabled={ !regex.test(store.getState().user.email);}
-            >
-              <Link to="/carteira">Entrar</Link>
-            </button>
+            <Link to="/carteira">
+              <button
+                className="button"
+                type="button"
+                disabled={ false }
+              >
+                Entrar
+              </button>
+            </Link>
           </div>
         </main>
       </div>
@@ -77,7 +86,7 @@ const mapStateToProps = (state) => ({
   email: state.email,
   Senha: state.Senha,
   Authenticated: state.Authenticated,
-  Logout: state.Authenticated,
+  ButtonDisabled: state.ButtonDisabled,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -85,13 +94,17 @@ const mapDispatchToProps = (dispatch) => ({
   Senha: (Senha) => dispatch({ type: 'CHANGE_SENHA', Senha }),
   Authenticated: (Authenticated) => dispatch({ type: 'AUTHENTICATED', Authenticated }),
   Logout: (Authenticated) => dispatch({ type: 'LOGOUT', Authenticated }),
+  Disabled: (ButtonDisabled) => dispatch({ type: 'DISABLED', ButtonDisabled }),
+  Abled: (ButtonDisabled) => dispatch({ type: 'ABLED', ButtonDisabled }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 Login.propTypes = {
-  Authenticated: PropTypes.bool.isRequired,
-  Logout: PropTypes.bool.isRequired,
+  Authenticated: PropTypes.func.isRequired,
+  Logout: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
   Senha: PropTypes.string.isRequired,
+  Disabled: PropTypes.func.isRequired,
+  Abled: PropTypes.func.isRequired,
 };

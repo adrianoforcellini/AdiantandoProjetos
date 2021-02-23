@@ -3,6 +3,7 @@ const INITIAL_STATE = {
   email: '',
   Senha: '',
   Authenticated: false,
+  ButtonDisabled: false,
 };
 
 export default function user(state = INITIAL_STATE, action) {
@@ -15,7 +16,10 @@ export default function user(state = INITIAL_STATE, action) {
     return { ...state, Authenticated: true };
   case 'LOGOUT':
     return { ...state, Authenticated: false };
-
+  case 'DISABLED':
+    return { ...state, ButtonDisabled: true };
+  case 'ABLED':
+    return { ...state, ButtonDisabled: false };
   default:
     return state;
   }
