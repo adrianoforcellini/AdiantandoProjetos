@@ -12,6 +12,8 @@ class ListaDeGastos extends Component {
     const { Despesas } = this.state;
     return (
       <div data-testid="total-field">
+        Total de Despesas:
+        {' '}
         {Despesas}
       </div>
     );
