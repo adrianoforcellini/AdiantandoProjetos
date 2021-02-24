@@ -23,7 +23,7 @@ class Login extends Component {
     } 
   };
 
-  viewState = () => {
+  viewState() {
     console.log(this.state);
   }
 
@@ -68,6 +68,8 @@ class Login extends Component {
               placeholder="e-mail"
               data-testid="email-input"
               onChange={ this.changeEmail }
+
+              // onChange={ this.changeEmail }
             />
             <input
               className="input text"
@@ -75,8 +77,7 @@ class Login extends Component {
               name="senha"
               placeholder="senha"
               data-testid="password-input"
-              onChange={({ target }) => this.props.email(target.value)}
-              // onChange={ this.changePassword }
+              onChange={ this.changePassword }
 
             />
             <Link to="/carteira">
@@ -88,7 +89,7 @@ class Login extends Component {
                 Entrar
               </button>
             </Link>
-            <button type="button" onClick={ email(email) }>view state</button>
+            <button type="button" onClick={ this.viewState }>view state</button>
 
           </div>
         </main>
