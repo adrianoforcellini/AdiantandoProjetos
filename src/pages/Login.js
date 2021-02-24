@@ -25,13 +25,15 @@ class Login extends Component {
   viewState() {
     console.log(this.state);
   }
-
+  
+  
   changeEmail = (event) => {
     const re = /^[A-Za-z0-9.-]+@[A-Za-z0-9]+(\.[A-Za-z]{3}|\.[A-Za-z]{3}\.[A-Za-z]{2})$/;
     if (re.test(event.target.value)) {
       this.setState({
         Email: event.target.value,
       });
+      setTimeout( this.logado(), 0.1);
     }else{
       this.setState({
         Email: '',
@@ -45,8 +47,8 @@ class Login extends Component {
       this.setState({
         senha: event.target.value,
       });
-      this.logado();
-      this.logado();
+      setTimeout( this.logado(), 0.1);
+    
 
     }else{
       this.setState({

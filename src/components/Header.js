@@ -8,6 +8,7 @@ class Header extends Component {
         <p data-testid="email-field">
           {store.getState().user.email}
         </p>
+
       </header>
     );
   }

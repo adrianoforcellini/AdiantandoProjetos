@@ -10,7 +10,6 @@ class Wallet extends Component {
         <Header />
         <ListaDeGastos />
         <Cambio />
-
       </div>
     );
   }
