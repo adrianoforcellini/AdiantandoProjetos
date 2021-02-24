@@ -4,7 +4,7 @@ import Login from '../pages/Login';
 import NotFound from '../pages/404';
 import Wallet from '../pages/Wallet';
 // import Loginst from "./Loginst";
-import PrivateRoute from './privateRoute';
+// import PrivateRoute from './privateRoute';
 
 export default class Routes extends Component {
   render() {
@@ -12,7 +12,7 @@ export default class Routes extends Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={ Login } />
-          <PrivateRoute path="/carteira" component={ Wallet } />
+          <Route path="/carteira" component={ Wallet } />
           <Route component={ NotFound } />
         </Switch>
       </BrowserRouter>
