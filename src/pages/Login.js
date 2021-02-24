@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 class Login extends Component {
   constructor() {
@@ -16,7 +15,7 @@ class Login extends Component {
   }
 
   logado = () => {
-    if (this.state.Email !== "" && this.state.password !== "") {
+    if (this.state.Email !== "" && this.state.senha !== "") {
       this.setState({
         buttonDisabled: false,
       });
@@ -41,21 +40,25 @@ class Login extends Component {
   }
 
   changePassword = (event) => {
-    const regexSenha = /\d{6,}/g;
+    const regexSenha = /\d{5,}/g;
     if (regexSenha.test(event.target.value)) {
       this.setState({
         senha: event.target.value,
       });
       this.logado();
+      this.logado();
+
     }else{
       this.setState({
-        senha: 1,
+        senha: '',
       });
     }
   }
 
   render() {
-    const { email } = this.props;
+    const { email, history } = this.props;
+    const { Email, buttonDisabled } = this.state;
+
     return (
       <div className="login">
         <main className="main">
@@ -69,7 +72,6 @@ class Login extends Component {
               data-testid="email-input"
               onChange={ this.changeEmail }
 
-              // onChange={ this.changeEmail }
             />
             <input
               className="input text"
@@ -80,15 +82,17 @@ class Login extends Component {
               onChange={ this.changePassword }
 
             />
-            <Link to="/carteira">
               <button
                 className="button"
                 type="button"
-                disabled={ this.state.buttonDisabled }
-              >
+                disabled={ buttonDisabled }
+                onClick = { () =>{
+                 email(Email);
+                  history.push('/carteira');
+                } }
+                >
                 Entrar
               </button>
-            </Link>
             <button type="button" onClick={ this.viewState }>view state</button>
 
           </div>
