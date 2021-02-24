@@ -3,45 +3,59 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
+
     this.state = {
-      email: '',
+      Email: '',
       senha: '',
       buttonDisabled: true,
+      email: '',
     };
-    this.logado = this.logado.bind(this);
-    this.change = this.change.bind(this);
     this.viewState = this.viewState.bind(this);
   }
 
-  logado() {
-    const { email, senha } = this.state;
-    const te = /^[A-Za-z0-9.-]+@[A-Za-z0-9]+(\.[A-Za-z]{3}|\.[A-Za-z]{3}\.[A-Za-z]{2})$/;
-    const regexEmail = te;
-    const regexSenha = /\d{5,}/g;
-    if (regexEmail.test(email) === true && regexSenha.test(senha) === true) {
+  logado = () => {
+    if (this.state.Email !== "" && this.state.password !== "") {
       this.setState({
         buttonDisabled: false,
+      });
+    } 
+  };
+
+  viewState = () => {
+    console.log(this.state);
+  }
+
+  changeEmail = (event) => {
+    const re = /^[A-Za-z0-9.-]+@[A-Za-z0-9]+(\.[A-Za-z]{3}|\.[A-Za-z]{3}\.[A-Za-z]{2})$/;
+    if (re.test(event.target.value)) {
+      this.setState({
+        Email: event.target.value,
+      });
+    }else{
+      this.setState({
+        Email: '',
       });
     }
   }
 
-  viewState() {
-    console.log(this.state);
-  }
-
-  change(event) {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
-    setTimeout(() => {
-      this.logado()
-    }, 0.1);
+  changePassword = (event) => {
+    const regexSenha = /\d{6,}/g;
+    if (regexSenha.test(event.target.value)) {
+      this.setState({
+        senha: event.target.value,
+      });
+      this.logado();
+    }else{
+      this.setState({
+        senha: 1,
+      });
+    }
   }
 
   render() {
-    const { buttonDisabled } = this.state;
+    const { email } = this.props;
     return (
       <div className="login">
         <main className="main">
@@ -53,7 +67,7 @@ class Login extends Component {
               name="email"
               placeholder="e-mail"
               data-testid="email-input"
-              onChange={ this.change }
+              onChange={ this.changeEmail }
             />
             <input
               className="input text"
@@ -61,19 +75,20 @@ class Login extends Component {
               name="senha"
               placeholder="senha"
               data-testid="password-input"
-              onChange={ this.change }
+              onChange={({ target }) => this.props.email(target.value)}
+              // onChange={ this.changePassword }
 
             />
             <Link to="/carteira">
               <button
                 className="button"
                 type="button"
-                disabled={ buttonDisabled }
+                disabled={ this.state.buttonDisabled }
               >
                 Entrar
               </button>
             </Link>
-            <button type="button" onClick={ this.viewState }>view state</button>
+            <button type="button" onClick={ email(email) }>view state</button>
 
           </div>
         </main>
