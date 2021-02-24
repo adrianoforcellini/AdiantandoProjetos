@@ -11,7 +11,7 @@ class Login extends Component {
       buttonDisabled: true,
       email: '',
     };
-    this.viewState = this.viewState.bind(this);
+    // this.viewState = this.viewState.bind(this);
   }
 
   logado = () => {
@@ -22,7 +22,7 @@ class Login extends Component {
     } 
   };
 
-  viewState() {
+  viewState = () => {
     console.log(this.state);
   }
   
