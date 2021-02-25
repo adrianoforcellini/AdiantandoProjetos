@@ -3,10 +3,11 @@ import store from '../store';
 
 class Header extends Component {
   render() {
+    const email = store.getState().user.email;
     return (
       <header>
         <p data-testid="email-field">
-          {store.getState().user.email}
+          {email}
         </p>
 
       </header>

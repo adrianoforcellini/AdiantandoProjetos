@@ -31,7 +31,7 @@ class Login extends Component {
       this.setState({
         Email: event.target.value,
       });
-      setTimeout(this.logado(), 0.1);
+     this.logado();
     } else {
       this.setState({
         Email: "",
@@ -107,3 +107,16 @@ const mapDispatchToProps = (dispatch) => ({
 })
  
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
+
+// Foi imprencidivel na desenvoltura desse projeto o compartilhamento de informações e a
+// constante ajúda mútua entre mim e meus colegas.
+//  Meus agradecimento á Arnaelcio Gomes, que fez com tal proeza os regex necessarios.
+//  Meus agradecimento á Ana Karine que mostrou a beleza das arrows no lugar dos binds e
+//  encontrou sozinha os elses que faltavam, 
+//  Meus agradecimento á Lucas Ribeiro  que me nos deu no momento inicial uma incrível explanação
+//  que esclareceu muito sobre o funcionamento do Redux.
+//  Tenho crescido muito com voces e estou muito feliz e orgulhoso de fazer parte deste crescimento.
+//  Mal posso esperar pra encontrar cada um de voces, fisicamente ou nao, em nosso futuro
+// proximo e próspero. 
+// Estes são só alguns pequenos exemplos de tudo que conversamos,
+// e essa só uma pequena demonstração de minha enorme gratidão. VQV
