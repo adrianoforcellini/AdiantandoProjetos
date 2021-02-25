@@ -5,22 +5,25 @@ class Login extends Component {
   constructor() {
     super();
     this.state = {
-      Email: "",
-      senha: "",
+      Email: '',
+      senha: '',
       buttonDisabled: true,
     };
+    this.logado = this.logado.bind(this);
+    this.change = this.change.bind(this);
   }
 
-  change = (event) => {
+  change(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value }, this.logado);
-  };
+  }
 
-  logado = () => {
+  logado() {
     const { Email, senha } = this.state;
     const rgx = /^[A-Za-z0-9.-]+@[A-Za-z0-9]+(\.[A-Za-z]{3}|\.[A-Za-z]{3}\.[A-Za-z]{2})$/;
     const testeEmail = rgx.test(Email);
-    if (testeEmail && senha.length > 5) {
+    const mininoDigitos = 5;
+    if (testeEmail && senha.length > mininoDigitos) {
       this.setState({
         buttonDisabled: false,
       });
@@ -29,42 +32,43 @@ class Login extends Component {
         buttonDisabled: true,
       });
     }
-  };
+  }
 
   render() {
     const { email, history } = this.props;
     const { Email, senha, buttonDisabled } = this.state;
     return (
-      <div className='login'>
-        <main className='main'>
-          <div className='form'>
+      <div className="login">
+        <main className="main">
+          <div className="form">
             <h1>Faça login usando sua conta</h1>
             <input
-              className='input text'
-              type='text'
-              name='Email'
-              value={Email}
-              placeholder='e-mail'
-              data-testid='email-input'
-              onChange={(event) => this.change(event)}
+              className="input text"
+              type="text"
+              name="Email"
+              value={ Email }
+              placeholder="e-mail"
+              data-testid="email-input"
+              onChange={ (event) => this.change(event) }
             />
             <input
-              className='input text'
-              type='text'
-              name='senha'
-              value={senha}
-              placeholder='senha'
-              data-testid='password-input'
-              onChange={(event) => this.change(event)}
+              className="input text"
+              type="text"
+              name="senha"
+              value={ senha }
+              placeholder="senha"
+              data-testid="password-input"
+              onChange={ (event) => this.change(event) }
             />
             <button
-              className='button'
-              type='button'
-              disabled={buttonDisabled}
-              onClick={() => {
+              className="button"
+              type="button"
+              disabled={ buttonDisabled }
+              onClick={ () => {
                 email(Email);
-                history.push("/carteira");
-              }}>
+                history.push('/carteira');
+              } }
+            >
               Entrar
             </button>
           </div>
